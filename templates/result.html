@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Matcher Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #343a40; /* Dark background color */
+            color: #ffffff; /* White text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .clear-button {
+            margin-top: 20px;
+        }
+        .clear-button form {
+            display: inline;
+        }
+        .clear-button input[type="submit"] {
+            background-color: #dc3545; /* Red color */
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .clear-button input[type="submit"]:hover {
+            background-color: #c82333; /* Darker red color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Job Matcher Result</h1>
+
+        <p><strong>Required Job Position:</strong> {{ job_position }}</p>
+        <p><strong>Predicted Job Position:</strong> {{ predicted_job }}</p>
+
+        <h2>Extracted Skills:</h2>
+        <ul>
+            {% for skill in extracted_skills %}
+                <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Extracted Experiences:</h2>
+        <ul>
+            {% for experience in extracted_experiences %}
+                <li>{{ experience }}</li>
+            {% endfor %}
+        </ul>
+
+        <p><strong>Number of Extracted Experiences:</strong> {{ extracted_experiences_count }}</p>
+
+        <p><strong>Required Skills Found:</strong> {% if all_skills_found %}Yes{% else %}No{% endif %}</p>
+        <p><strong>Required Experiences Found:</strong> {% if all_experiences_found %}Yes{% else %}No{% endif %}</p>
+
+        <h2>Match Result:</h2>
+        {% if match %}
+            <p>Congratulations! This resume is a match for the desired job position with a match percentage of {{ match_percentage }}%.</p>
+        {% else %}
+            <p>Sorry, this resume does not fully match the required job position.</p>
+        {% endif %}
+
+        <!-- Clear button -->
+        <div class="clear-button">
+            <form method="POST" action="{{ url_for('clear_uploads') }}">
+                <input type="submit" value="Clear">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
